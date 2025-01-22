@@ -1,0 +1,9 @@
+#blog{
+    display: flex;
+    justify-content: center;
+    background-color: blue;
+    opacity: 9;
+    height: 200px;
+    align-items: center;
+    color: white;
+  }
