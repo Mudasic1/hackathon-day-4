@@ -10,7 +10,7 @@ import imageUrlBuilder from "@sanity/image-url";
 const sanity = createClient({
   projectId: "aw7xrfor",
   dataset: "production",
-  apiVersion: "2025-01-22",
+  apiVersion: "2024-01-22",
   useCdn: true,
 });
 
