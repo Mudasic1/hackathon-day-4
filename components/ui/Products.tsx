@@ -137,7 +137,11 @@ export default function Products() {
             </div>
 
             <div className="p-4 space-y-2">
-              <h3 className="text-lg font-bold">{product.title}</h3>
+              <Link href={`/shop/${product._id}`}>
+                <h3 className="text-lg font-bold hover:text-blue-600 transition-colors">
+                  {product.title}
+                </h3>
+              </Link>
               <p className="text-green-600 font-semibold">
                 ${product.price || "Price not available"}
               </p>

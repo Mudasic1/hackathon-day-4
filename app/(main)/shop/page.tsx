@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Image from "next/image";
+import Link from "next/link";
 
 const sanity = createClient({
   projectId: "aw7xrfor",
@@ -112,9 +113,11 @@ export default function Shop() {
             />
 
             <div className="mt-4">
-              <h2 className="text-lg font-semibold text-gray-800 hover:text-blue-600">
-                {product.title}
-              </h2>
+              <Link href={`/shop/${product._id}`}>
+                <h2 className="text-lg font-semibold text-gray-800 hover:text-blue-600">
+                  {product.title}
+                </h2>
+              </Link>
 
               <div className="flex justify-between items-center mt-2">
                 <div>
