@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { createClient } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import imageUrlBuilder from '@sanity/image-url'
 
 const sanity = createClient({
@@ -34,6 +34,7 @@ interface Product {
 
 export default function ProductDetail() {
   const { productId } = useParams();
+  const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,13 +66,29 @@ export default function ProductDetail() {
   }, [productId]);
 
   const handleAddToCart = () => {
-    setShowCartPopup(true);
-    setTimeout(() => setShowCartPopup(false), 2000);
+    if (product) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const updatedCart = [...cart, product];
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      setShowCartPopup(true);
+      setTimeout(() => {
+        setShowCartPopup(false);
+        router.push("/cart");
+      }, 2000);
+    }
   };
 
   const handleAddToWishlist = () => {
-    setShowWishlistPopup(true);
-    setTimeout(() => setShowWishlistPopup(false), 2000);
+    if (product) {
+      const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+      const updatedWishlist = [...wishlist, product];
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      setShowWishlistPopup(true);
+      setTimeout(() => {
+        setShowWishlistPopup(false);
+        router.push("/wishlist");
+      }, 2000);
+    }
   };
 
   if (isLoading) {
@@ -200,4 +217,4 @@ export default function ProductDetail() {
       </div>
     </div>
   );
-} 
+}
