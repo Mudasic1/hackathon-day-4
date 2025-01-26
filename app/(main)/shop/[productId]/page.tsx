@@ -111,7 +111,7 @@ export default function ProductDetail() {
     <div className="container mx-auto px-4 py-8">
       {/* Product Details Section */}
       <div className="grid md:grid-cols-2 gap-8 mb-12">
-        <div className="relative h-[400px] md:h-[600px]">
+        <div className="relative h-[400px] md:h-[600px] overflow-hidden">
           <Image
             src={urlFor(product.productImage).url()}
             alt={product.title}
@@ -132,7 +132,7 @@ export default function ProductDetail() {
             )}
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {product.tags.map((tag, index) => (
               <span
                 key={index}
@@ -194,7 +194,7 @@ export default function ProductDetail() {
               className="group"
             >
               <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div className="relative h-48">
+                <div className="relative h-48 overflow-hidden">
                   <Image
                     src={urlFor(relatedProduct.productImage).url()}
                     alt={relatedProduct.title}
