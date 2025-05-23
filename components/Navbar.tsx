@@ -21,13 +21,30 @@ export default function Navbar() {
   const { isSignedIn } = useUser();
   const router = useRouter();
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e) => {
     e.preventDefault();
+    console.log("Search triggered with query:", searchQuery); // Debug log
+    
     if (searchQuery.trim()) {
-      router.push(`/shop?search=${encodeURIComponent(searchQuery)}`);
+      const searchUrl = `/shop?search=${encodeURIComponent(searchQuery.trim())}`;
+      console.log("Navigating to:", searchUrl); // Debug log
+      
+      router.push(searchUrl);
       setSearchOpen(false);
       setSearchQuery("");
+    } else {
+      console.log("Empty search query"); // Debug log
     }
+  };
+
+  const handleSearchClick = () => {
+    console.log("Search button clicked"); // Debug log
+    setSearchOpen(!searchOpen);
+  };
+
+  const handleInputChange = (e) => {
+    setSearchQuery(e.target.value);
+    console.log("Search query updated:", e.target.value); // Debug log
   };
 
   // Close menus when clicking outside
@@ -86,9 +103,10 @@ export default function Navbar() {
             </Link>
             
             <button 
-              onClick={() => setSearchOpen(!searchOpen)}
+              onClick={handleSearchClick}
               className="hover:opacity-75 transition-opacity"
               aria-label="Search"
+              type="button"
             >
               <Image src="/search.svg" alt="Search" width={24} height={24} />
             </button>
@@ -118,13 +136,14 @@ export default function Navbar() {
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
+            type="button"
           >
             <Image src="/menu.png" alt="" width={25} height={25} />
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu - Keeping the updated version */}
+      {/* Mobile Menu */}
       {menuOpen && (
         <div 
           className="lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center" 
@@ -173,6 +192,7 @@ export default function Navbar() {
                     setMenuOpen(false);
                   }}
                   className="flex flex-col items-center gap-1"
+                  type="button"
                 >
                   <Image src="/search.svg" alt="Search" width={28} height={28} />
                   <span className="text-sm">Search</span>
@@ -202,7 +222,7 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* Search Input */}
+      {/* Search Input - Fixed version */}
       {searchOpen && (
         <div 
           className="absolute w-full bg-white shadow-lg border-t z-40"
@@ -214,7 +234,7 @@ export default function Navbar() {
                 type="text"
                 placeholder="Search products..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleInputChange}
                 className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
                 aria-label="Search products"
                 autoFocus
